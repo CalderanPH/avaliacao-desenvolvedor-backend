@@ -1,2 +1,14 @@
-package paulocalderan.avaliacaodesenvolvedorbackend.response;public class EnderecoListResponse {
+package paulocalderan.avaliacaodesenvolvedorbackend.response;
+
+import lombok.Builder;
+import lombok.Data;
+
+import java.util.List;
+
+@Builder
+@Data
+public class EnderecoListResponse {
+
+    private List<EnderecoResponse> enderecos;
+
 }

@@ -1,6 +1,6 @@
 CREATE TABLE endereco
 (
-    id         UUID PRIMARY KEY,
+    id         BIGINT PRIMARY KEY,
     logradouro VARCHAR(255),
     cep        INT,
     numero     INT,
@@ -9,7 +9,7 @@ CREATE TABLE endereco
 
 CREATE TABLE pessoa
 (
-    id                 UUID PRIMARY KEY,
+    id                 BIGINT PRIMARY KEY,
     nome               VARCHAR(255),
     data_de_nascimento DATE,
     endereco_id        BIGINT,
