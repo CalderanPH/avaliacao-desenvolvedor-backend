@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class PessoaResponse {
 
+    private Long id;
     private String nome;
 
     @JsonFormat(pattern = "yyyy-MM-dd")

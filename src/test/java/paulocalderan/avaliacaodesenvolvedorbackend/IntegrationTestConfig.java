@@ -26,15 +26,16 @@ public class IntegrationTestConfig {
     @LocalServerPort
     private int port;
 
+    // Devido a implementação ser com database H2 as funcionalidades abaixo não funciona como deveria, mantive para demonstrar o conhecimento.
     public void setUp() {
-//        dataBaseCleaner.clearTables();
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+//        dataBaseCleaner.clearTables();
 //        RestAssured.port = port;
     }
 
     protected String getIdHeaderLocation(Response response) {
-        String body = response.body().asString();
-        Matcher matcher = UUID_PATTERN.matcher(body);
+        String location = response.getHeader("Location");
+        Matcher matcher = UUID_PATTERN.matcher(location);
         if (matcher.find()) {
             return matcher.group();
         }

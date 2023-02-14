@@ -3,7 +3,6 @@ package paulocalderan.avaliacaodesenvolvedorbackend.domain.pessoa;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
 import paulocalderan.avaliacaodesenvolvedorbackend.domain.endereco.Endereco;
 
 import javax.persistence.*;
@@ -33,4 +32,5 @@ public class Pessoa {
         this.dataDeNascimento = dataDeNascimento;
         this.endereco = endereco;
     }
+
 }

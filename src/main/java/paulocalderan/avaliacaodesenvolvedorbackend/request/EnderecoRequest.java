@@ -7,8 +7,6 @@ import javax.validation.constraints.NotNull;
 @Data
 public class EnderecoRequest {
 
-    private Long id;
-
     @NotNull(message = "O logradouro deve ser informado.")
     private String logradouro;
 

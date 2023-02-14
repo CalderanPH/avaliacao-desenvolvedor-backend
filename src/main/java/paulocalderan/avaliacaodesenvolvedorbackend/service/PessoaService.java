@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import paulocalderan.avaliacaodesenvolvedorbackend.domain.pessoa.Pessoa;
-import paulocalderan.avaliacaodesenvolvedorbackend.exception.ErroException;
 import paulocalderan.avaliacaodesenvolvedorbackend.mapper.PessoaMapper;
 import paulocalderan.avaliacaodesenvolvedorbackend.repository.PessoaRepository;
 import paulocalderan.avaliacaodesenvolvedorbackend.request.PessoaRequest;
@@ -58,7 +57,7 @@ public class PessoaService {
 
     public Pessoa getById(Long id) {
         return pessoaRepository.findById(id)
-                .orElseThrow(() -> new ErroException("Pessoa não encontrada!"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pessoa não encontrada!"));
     }
 
     public void delete(Long id) {

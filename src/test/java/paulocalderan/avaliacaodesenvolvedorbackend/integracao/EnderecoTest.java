@@ -27,12 +27,12 @@ public class EnderecoTest extends IntegrationTestConfig {
     public void setUp() {
         super.setUp();
         basePath = "/endereco";
-        enderecoJson = ResourceUtils.getContentFromResource("/json/criarPessoa.json");
-        //prepararDados();
+        enderecoJson = ResourceUtils.getContentFromResource("/json/criarEndereco.json");
+        prepararDados();
     }
 
     private void prepararDados() {
-        endereco = new Endereco("Albatroz", "8670-065", 10, "Arapongas/PR");
+        Endereco endereco = new Endereco(100L, "Albatroz", "8670-065", 10, "Arapongas/PR");
         this.endereco = enderecoRepository.save(endereco);
     }
 
@@ -57,9 +57,9 @@ public class EnderecoTest extends IntegrationTestConfig {
         given()
                 .pathParam("id", id)
                 .when()
-                .get("{/id}")
+                .get("/{id}")
                 .then()
-                .body("size()", is(8))
+                .body("size()", is(5))
                 .body("$", hasKey("id"))
                 .body("$", hasKey("cep"))
                 .body("$", hasKey("logradouro"))
@@ -81,7 +81,7 @@ public class EnderecoTest extends IntegrationTestConfig {
                 .replace("{{numero}}", "400")
                 .replace("{{cidade}}", "Arapongas/PR");
         given()
-                .pathParam("id", endereco.getId().toString())
+                .pathParam("id", endereco.getId())
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -89,6 +89,30 @@ public class EnderecoTest extends IntegrationTestConfig {
                 .put("/{id}")
                 .then()
                 .statusCode(HttpStatus.NO_CONTENT.value());
+    }
+
+    @Test
+    public void findById_status200() {
+        given()
+                .pathParam("id", endereco.getId())
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .get("/{id}")
+                .then()
+                .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    public void findById_naoEncontrado() {
+        given()
+                .pathParam("id", -1)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .get("/{id}")
+                .then()
+                .statusCode(HttpStatus.NOT_FOUND.value());
     }
 
     @Test
@@ -101,30 +125,6 @@ public class EnderecoTest extends IntegrationTestConfig {
                 .delete("/{id}")
                 .then()
                 .statusCode(HttpStatus.NO_CONTENT.value());
-    }
-
-    @Test
-    public void findById_status200() {
-        given()
-                .pathParam("id", endereco.getId().toString())
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .when()
-                .get("/{id}")
-                .then()
-                .statusCode(HttpStatus.OK.value());
-    }
-
-    @Test
-    public void findById_naoEncontrado() {
-        given()
-                .pathParam("id", 100L)
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .when()
-                .get("/{id}")
-                .then()
-                .statusCode(HttpStatus.NOT_FOUND.value());
     }
 
 }

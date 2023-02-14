@@ -8,6 +8,7 @@ import paulocalderan.avaliacaodesenvolvedorbackend.domain.endereco.Endereco;
 @NoArgsConstructor
 public class EnderecoResponse {
 
+    private Long id;
     private String logradouro;
     private String cep;
     private int numero;

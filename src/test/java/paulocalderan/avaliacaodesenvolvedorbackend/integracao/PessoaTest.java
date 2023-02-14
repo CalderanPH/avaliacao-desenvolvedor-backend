@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import paulocalderan.avaliacaodesenvolvedorbackend.IntegrationTestConfig;
 import paulocalderan.avaliacaodesenvolvedorbackend.domain.endereco.Endereco;
 import paulocalderan.avaliacaodesenvolvedorbackend.domain.pessoa.Pessoa;
+import paulocalderan.avaliacaodesenvolvedorbackend.repository.EnderecoRepository;
 import paulocalderan.avaliacaodesenvolvedorbackend.repository.PessoaRepository;
 import paulocalderan.avaliacaodesenvolvedorbackend.utils.ResourceUtils;
 
@@ -23,6 +24,9 @@ public class PessoaTest extends IntegrationTestConfig {
     @Autowired
     private PessoaRepository pessoaRepository;
 
+    @Autowired
+    private EnderecoRepository enderecoRepository;
+
     private String pessoaJson;
     private Pessoa pessoa;
     private Endereco endereco;
@@ -36,8 +40,9 @@ public class PessoaTest extends IntegrationTestConfig {
     }
 
     private void prepararDados() {
-        Endereco endereco = new Endereco("Albatroz", "8670-065", 10, "Arapongas/PR");
-        Pessoa pessoa = new Pessoa("Paulo Henrique", LocalDate.of(1995, 8, 20), endereco);
+        Endereco endereco = new Endereco(100L, "Albatroz", "8670-065", 10, "Arapongas/PR");
+        this.endereco = enderecoRepository.save(endereco);
+        Pessoa pessoa = new Pessoa(101L, "Paulo Henrique", LocalDate.of(1995, 8, 20), this.endereco);
         this.pessoa = pessoaRepository.save(pessoa);
     }
 
@@ -64,9 +69,9 @@ public class PessoaTest extends IntegrationTestConfig {
         given()
                 .pathParam("id", id)
                 .when()
-                .get("{/id}")
+                .get("/{id}")
                 .then()
-                .body("size()", is(8))
+                .body("size()", is(4))
                 .body("$", hasKey("id"))
                 .body("$", hasKey("nome"))
                 .body("$", hasKey("dataDeNascimento"))
@@ -76,7 +81,7 @@ public class PessoaTest extends IntegrationTestConfig {
                 .body("endereco", hasKey("cidade"))
                 .body("id", notNullValue())
                 .body("nome", is("Paulo Henrique Calderan"))
-                .body("dataDeNascimento", is("1995-09-21"))
+                .body("dataDeNascimento", is("1995-08-20"))
                 .body("endereco.logradouro", is("Av. Arapongas"))
                 .body("endereco.cep", is("8574-566"))
                 .body("endereco.numero", is(400))
@@ -94,24 +99,12 @@ public class PessoaTest extends IntegrationTestConfig {
                 .replace("{{numero}}", "400")
                 .replace("{{cidade}}", "Arapongas/PR");
         given()
-                .pathParam("/pessoa/{id}", pessoa.getId().toString())
+                .pathParam("id", pessoa.getId())
                 .body(payload)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()
-                .put()
-                .then()
-                .statusCode(HttpStatus.NO_CONTENT.value());
-    }
-
-    @Test
-    public void deletar_status204() {
-        given()
-                .pathParam("id", pessoa.getId().toString())
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .when()
-                .delete("/{id}")
+                .put("/{id}")
                 .then()
                 .statusCode(HttpStatus.NO_CONTENT.value());
     }
@@ -138,6 +131,18 @@ public class PessoaTest extends IntegrationTestConfig {
                 .get("/{id}")
                 .then()
                 .statusCode(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
+    public void deletar_status204() {
+        given()
+                .pathParam("id", pessoa.getId())
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .delete("/{id}")
+                .then()
+                .statusCode(HttpStatus.NO_CONTENT.value());
     }
 
 }
