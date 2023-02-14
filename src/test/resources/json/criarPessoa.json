@@ -1,0 +1,10 @@
+{
+  "nome": "{{nome}}",
+  "dataDeNascimento": "{{dataDeNascimento}}",
+  "endereco": {
+    "logradouro": "{{logradouro}}",
+    "cep": "{{cep}}",
+    "numero": "{{numero}}",
+    "cidade": "{{cidade}}"
+  }
+}

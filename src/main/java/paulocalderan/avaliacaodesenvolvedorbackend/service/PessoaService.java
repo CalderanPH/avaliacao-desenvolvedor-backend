@@ -1,12 +1,13 @@
 package paulocalderan.avaliacaodesenvolvedorbackend.service;
 
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 import paulocalderan.avaliacaodesenvolvedorbackend.domain.pessoa.Pessoa;
 import paulocalderan.avaliacaodesenvolvedorbackend.exception.ErroException;
 import paulocalderan.avaliacaodesenvolvedorbackend.mapper.PessoaMapper;
-import paulocalderan.avaliacaodesenvolvedorbackend.repository.EnderecoRepository;
 import paulocalderan.avaliacaodesenvolvedorbackend.repository.PessoaRepository;
 import paulocalderan.avaliacaodesenvolvedorbackend.request.PessoaRequest;
 import paulocalderan.avaliacaodesenvolvedorbackend.response.PessoaListResponse;
@@ -14,17 +15,16 @@ import paulocalderan.avaliacaodesenvolvedorbackend.response.PessoaResponse;
 
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
 @Service
 @Transactional
 public class PessoaService {
 
+    @Autowired
     private PessoaRepository pessoaRepository;
-    private EnderecoRepository enderecoRepository;
 
     public Pessoa findById(Long id) {
         return pessoaRepository.findById(id)
-                .orElseThrow(() -> new ErroException("Pessoa não encontrada."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pessoa não encontrada."));
     }
 
     public PessoaResponse getPerson(Long id) {
@@ -50,8 +50,8 @@ public class PessoaService {
         return pessoaRepository.save(pessoa);
     }
 
-    public void update(PessoaRequest pessoaRequest) {
-        Pessoa pessoa = getById(pessoaRequest.getId());
+    public void update(Long id, PessoaRequest pessoaRequest) {
+        Pessoa pessoa = getById(id);
         PessoaMapper.INSTANCE.update(pessoaRequest, pessoa);
         pessoaRepository.save(pessoa);
     }

@@ -35,10 +35,11 @@ public class PessoaController {
         return pessoaService.save(pessoaRequest);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void update(@RequestBody @Valid PessoaRequest pessoaRequest) {
-        pessoaService.update(pessoaRequest);
+    public void update(@PathVariable Long id,
+                       @RequestBody @Valid PessoaRequest pessoaRequest) {
+        pessoaService.update(id, pessoaRequest);
     }
 
     @DeleteMapping("/{id}")

@@ -1,0 +1,6 @@
+{
+  "logradouro": "{{logradouro}}",
+  "cep": "{{cep}}",
+  "numero": "{{numero}}",
+  "cidade": "{{cidade}}"
+}

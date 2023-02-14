@@ -13,7 +13,7 @@ public class EnderecoRequest {
     private String logradouro;
 
     @NotNull(message = "O cep deve ser informado.")
-    private int cep;
+    private String cep;
 
     @NotNull(message = "O número deve ser informado.")
     private int numero;

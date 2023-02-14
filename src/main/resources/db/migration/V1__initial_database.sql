@@ -1,17 +1,17 @@
 CREATE TABLE endereco
 (
-    id         BIGINT PRIMARY KEY,
+    id         UUID PRIMARY KEY,
     logradouro VARCHAR(255),
-    cep        INT,
+    cep        VARCHAR(255),
     numero     INT,
     cidade     VARCHAR(255)
 );
 
 CREATE TABLE pessoa
 (
-    id                 BIGINT PRIMARY KEY,
+    id                 UUID PRIMARY KEY,
     nome               VARCHAR(255),
     data_de_nascimento DATE,
-    endereco_id        BIGINT,
+    endereco_id        UUID,
     FOREIGN KEY (endereco_id) REFERENCES endereco (id)
 );

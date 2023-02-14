@@ -35,10 +35,11 @@ public class EnderecoController {
         return enderecoService.save(enderecoRequest);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void update(@RequestBody @Valid EnderecoRequest enderecoRequest) {
-        enderecoService.update(enderecoRequest);
+    public void update(@PathVariable Long id,
+                       @RequestBody @Valid EnderecoRequest enderecoRequest) {
+        enderecoService.update(id, enderecoRequest);
     }
 
     @DeleteMapping("/{id}")

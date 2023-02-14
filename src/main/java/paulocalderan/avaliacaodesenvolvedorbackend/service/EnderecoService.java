@@ -1,8 +1,10 @@
 package paulocalderan.avaliacaodesenvolvedorbackend.service;
 
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 import paulocalderan.avaliacaodesenvolvedorbackend.domain.endereco.Endereco;
 import paulocalderan.avaliacaodesenvolvedorbackend.exception.ErroException;
 import paulocalderan.avaliacaodesenvolvedorbackend.mapper.EnderecoMapper;
@@ -13,16 +15,16 @@ import paulocalderan.avaliacaodesenvolvedorbackend.response.EnderecoResponse;
 
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
 @Service
 @Transactional
 public class EnderecoService {
 
+    @Autowired
     private EnderecoRepository enderecoRepository;
 
     public Endereco findById(Long id) {
         return enderecoRepository.findById(id)
-                .orElseThrow(() -> new ErroException("Endereco não encontrada."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Endereco não encontrada."));
     }
 
     public EnderecoResponse getEndereco(Long id) {
@@ -48,7 +50,7 @@ public class EnderecoService {
         return enderecoRepository.save(endereco);
     }
 
-    public void update(EnderecoRequest enderecoRequest) {
+    public void update(Long id, EnderecoRequest enderecoRequest) {
         Endereco endereco = getById(enderecoRequest.getId());
         EnderecoMapper.INSTANCE.update(enderecoRequest, endereco);
         enderecoRepository.save(endereco);

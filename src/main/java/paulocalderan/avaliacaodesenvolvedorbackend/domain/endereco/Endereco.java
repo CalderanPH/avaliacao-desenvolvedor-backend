@@ -14,12 +14,18 @@ import javax.persistence.*;
 public class Endereco {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String logradouro;
-    private int cep;
+    private String cep;
     private int numero;
     private String cidade;
 
+    public Endereco(String logradouro, String cep, int numero, String cidade) {
+        this.logradouro = logradouro;
+        this.cep = cep;
+        this.numero = numero;
+        this.cidade = cidade;
+    }
 }
