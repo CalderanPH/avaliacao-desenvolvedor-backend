@@ -1,27 +1,3 @@
-# Avaliação Desenvolvedor Back-end
-
-O objetivo deste documento é identificar seus conhecimentos quanto às tecnologias utilizadas no cotidiano de desenvolvimento da equipe de Back-end.
-
-Esta análise propõe avaliar os seguintes temas: 
--	Qualidade de código
--	Java, Spring boot
--	API REST
--	Testes
-
-## **Qualidade de código**
-
-#### 1.	Durante a implementação de uma nova funcionalidade de software solicitada, quais critérios você avalia e implementa para garantia de qualidade de software?
-Requisitos: Verificar se os requisitos da funcionalidade estão claros e completos;
-Testes: Criar casos de teste que cubram todos os cenários possíveis e garantam a funcionalidade correta do software;
-Documentação: Documentar a funcionalidade e seu comportamento para futuros desenvolvedores e usuários;
-Performance: Medir e otimizar o desempenho da funcionalidade para garantir que ela funcione de forma eficiente em diferentes cenários de uso;
-Segurança: Verificar se a funcionalidade é segura e protegida contra possíveis vulnerabilidades;
-Manutenibilidade: Garantir que a funcionalidade seja fácil de manter e corrigir no futuro, se necessário.
-
-#### 2.	Em qual etapa da implementação você considera a qualidade de software?
-A qualidade do software é considerado em todas as etapas da implementação, desde a criação, manutenção e suporte. Importante ter um bom Planejamento, garantindo que o software terá uma boa arquitetura, codificação, teste e implantação.
-
-
 ## Desafio Java
 
 Usando Spring boot, crie uma API simples para gerenciar Pessoas. Esta API deve permitir:  
